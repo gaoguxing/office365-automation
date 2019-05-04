@@ -6,7 +6,7 @@ At first, You should create a new Microsoft App.
 
 [Register an application with microsoft identity platform](https://docs.microsoft.com/en-us/graph/auth-register-app-v2)
 
-Then add some permissions. The following permissions are required.
+The following permissions are required.
 
 > Azure Active Directory Graph
 
