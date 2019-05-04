@@ -13,7 +13,7 @@ return [
         // Monolog settings
         'logger' => [
             'name' => 'office365-api',
-            'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app-'. date('Y-m-d') .'.log',
+            'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',
             'level' => \Monolog\Logger::DEBUG,
         ],
 
