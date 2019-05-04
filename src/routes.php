@@ -27,7 +27,7 @@ return function (App $app) {
                 } catch (ServerException | Exception $e){
                     return $response->withStatus(400)->withJson([
                         'status' => false,
-                        json_decode($e->getResponse()->getBody()->getContents())
+                        'errors' => json_decode($e->getResponse()->getBody()->getContents())
                     ]);
                 }
             } else {

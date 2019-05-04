@@ -30,4 +30,21 @@ User.ReadWrite.All
 
 next you should click `Grant consent`
 
-Coming soon.
+Copy `.env.production` to `.env` and configure it.
+
+### API
+
+#### Create User
+
+> POST http://domain/api/v1/users
+
+##### Body
+
+nickname: Nickname
+
+mail_nickname: Email Prefix
+
+password: Login Password
+
+
+
