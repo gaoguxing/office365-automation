@@ -2,12 +2,10 @@
 
 namespace Libraries;
 
-use Exception;
 use Microsoft\Graph\Graph;
 use Microsoft\Graph\Model\User;
 use GuzzleHttp\Client as HttpClient;
 use Microsoft\Graph\Model\SubscribedSku;
-use GuzzleHttp\Exception\ServerException;
 use Microsoft\Graph\Model\AssignedLicense;
 
 class Office365
@@ -86,18 +84,12 @@ class Office365
             ]
         ]);
 
-        try {
-            $user = $this->graph->createRequest('POST', '/users')
-                ->attachBody($newUser)
-                ->setReturnType(User::class)
-                ->execute();
+        $user = $this->graph->createRequest('POST', '/users')
+            ->attachBody($newUser)
+            ->setReturnType(User::class)
+            ->execute();
 
-            $this->assignLicense($user->getId());
-
-            return true;
-        } catch (ServerException | Exception $e) {
-            return json_decode($e->getResponse()->getBody()->getContents());
-        }
+        $this->assignLicense($user->getId());
     }
 
     protected function assignLicense($userId)

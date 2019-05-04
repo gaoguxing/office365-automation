@@ -1,10 +1,12 @@
 <?php
 
 use Slim\App;
+use Exception;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Libraries\Office365;
 use Respect\Validation\Validator;
+use GuzzleHttp\Exception\ServerException;
 
 return function (App $app) {
     $container = $app->getContainer();
@@ -18,12 +20,15 @@ return function (App $app) {
             ]);
 
             if ($validator->isValid()) {
-                $succeed = Office365::instance()->createUser($request->getParsedBody());
+                try {
+                    Office365::instance()->createUser($request->getParsedBody());
 
-                if ($succeed === true) {
                     return $response->withStatus(201)->withJson(['status' => true]);
-                } else {
-                    return $response->withStatus(400)->withJson(['status' => false, 'message' => $succeed]);
+                } catch (ServerException | Exception $e){
+                    return $response->withStatus(400)->withJson([
+                        'status' => false,
+                        json_decode($e->getResponse()->getBody()->getContents())
+                    ]);
                 }
             } else {
                 return $response->withStatus(421)->withJson([
